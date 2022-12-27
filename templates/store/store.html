@@ -1,0 +1,314 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- breadcrumb-area start -->
+    <div class="breadcrumb-area">
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-12 text-center">
+                    {% if 'search' in request.path %}
+                    <h2 class="breadcrumb-title">Search Result(s)</h2>
+                    <!-- breadcrumb-list start -->
+                    <ul class="breadcrumb-list">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item active">Search</li>
+                    </ul>
+                    {% else %}
+                    <h2 class="breadcrumb-title">Shop</h2>
+                    <!-- breadcrumb-list start -->
+                    <ul class="breadcrumb-list">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item active">Shop</li>
+                    </ul>
+                    {% endif %}
+                    <!-- breadcrumb-list end -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb-area end -->
+
+    <!-- Shop Page Start  -->
+    <div class="shop-category-area pt-100px pb-100px">
+        <div class="container">
+            <header class="border-bottom mb-4 pb-3">
+                <div class="form-inline">
+                    <span class="mr-md-auto">{{ product_count }} Item(s) found </span>
+
+                </div>
+            </header>
+            <div class="row">
+                <div class="col-lg-9 order-lg-last col-md-12 order-md-first">
+                    <!-- Shop Top Area Start -->
+                    <div class="desktop-tab">
+                        <div class="shop-top-bar d-flex">
+                            <!-- Left Side End -->
+                            <div class="shop-tab nav">
+                                <a class="active" href="#shop-grid" data-bs-toggle="tab">
+                                    <i class="fa fa-th" aria-hidden="true"></i>
+                                </a>
+                                <a href="#shop-list" data-bs-toggle="tab">
+                                    <i class="fa fa-list" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                            <!-- Right Side Start -->
+                            <div class="select-shoing-wrap d-flex align-items-center">
+                                <div class="shot-product">
+                                    <p>Categories:</p>
+                                </div>
+                                <div class="shop-select">
+                                    <select id="selection" class="shop-sort">
+                                        <option value="{% url 'store' %}" data-display="Default">Default</option>
+                                        {% for category in links %}
+                                        <option value="{{ category.get_url }}">{{ category.category_name }}</option>
+                                        {% endfor %}
+                                    </select>
+
+                                </div>
+                            </div>
+                            <!-- Right Side End -->
+
+                            <!-- Left Side start -->
+                            <p class="compare-product">Product Compare <span>(0) </span></p>
+                        </div>
+                    </div>
+                    <!-- Shop Top Area End -->
+
+                    <!-- Mobile shop bar -->
+                    <div class="shop-top-bar mobile-tab">
+                        <!-- Left Side End -->
+                        <div class="shop-tab nav d-flex justify-content-between">
+                            <div class="shop-tab nav">
+                                <a class="active" href="#shop-grid" data-bs-toggle="tab">
+                                    <i class="fa fa-th" aria-hidden="true"></i>
+                                </a>
+                                <a href="#shop-list" data-bs-toggle="tab">
+                                    <i class="fa fa-list" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                            <!-- Right Side Start -->
+                            <div class="select-shoing-wrap d-flex align-items-center">
+                                <div class="shot-product">
+                                    <p>Sort By:</p>
+                                </div>
+                                <div class="shop-select">
+                                    <select class="shop-sort">
+                                        <option data-display="Default">Default</option>
+                                        <option value="1"> Name, A to Z</option>
+                                        <option value="2"> Name, Z to A</option>
+                                        <option value="3"> Price, low to high</option>
+                                        <option value="4"> Price, high to low</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Right Side End -->
+                        <!-- Right Side Start -->
+
+                    </div>
+                    <!-- Mobile shop bar -->
+
+                    <!-- Shop Bottom Area Start -->
+                    <div class="shop-bottom-area">
+
+                        <!-- Tab Content Area Start -->
+                        <div class="row">
+                            <div class="col">
+                                <div class="tab-content">
+                                    <div class="tab-pane fade show active" id="shop-grid">
+                                        <div class="row mb-n-30px">
+                                        {% if product %}
+                                            {% for stores in product %}
+                                            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6 mb-30px" data-aos="fade-up"
+                                                data-aos-delay="200">
+                                                <!-- Single Prodect -->
+                                                <div class="product">
+                                                    <div class="thumb">
+                                                        <a href="{{stores.get_url}}" class="image">
+                                                            <img src="{{ stores.images.url }}"
+                                                                alt="Product" />
+                                                            {% if stores.alt_images %}
+                                                            <img class="hover-image"
+                                                                src="{{ stores.alt_images.url }}" alt="Product" />
+                                                            {% endif %}
+                                                        </a>
+                                                        <span class="badges">
+                                                            <span class="new">New</span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="content">
+                                                        <span class="ratings">
+                                                            <div class="raising-star">
+                                    <!--                                     less than 0.5 show empty star else if greater than or equal to 0.5 print half star, if none print full stars-->
+                                                                    <i class="fa fa-star{% if stores.average_review < 0.5%}-o{%elif stores.average_review >= 0.5 and stores.average_review < 1 %}-half-o {% endif %}"></i>
+                                                                    <i class="fa fa-star{% if stores.average_review < 1.5%}-o{%elif stores.average_review >= 1.5 and stores.average_review < 2 %}-half-o {% endif %}"></i>
+                                                                    <i class="fa fa-star{% if stores.average_review < 2.5%}-o{%elif stores.average_review >= 2.5 and stores.average_review < 3 %}-half-o {% endif %}"></i>
+                                                                    <i class="fa fa-star{% if stores.average_review < 3.5%}-o{%elif stores.average_review >= 3.5 and stores.average_review < 4 %}-half-o {% endif %}"></i>
+                                                                    <i class="fa fa-star{% if stores.average_review < 4.5%}-o{%elif stores.average_review >= 4.5 and stores.average_review < 5 %}-half-o {% endif %}"></i>
+                                                                 </div>
+                                                        </span>
+                                                        <h5 class="title"><a href="{{stores.get_url}}">{{ stores.product_name }}
+                                                            </a>
+                                                        </h5>
+                                                        <span class="price">
+                                                            <span class="new">${{ stores.price }}</span>
+                                                        </span>
+                                                    </div>
+                                                    <a href="{{ stores.get_url }}" title="Add To Cart" class=" add-to-cart">View Details</a>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        {% else %}
+                                            <div class="empty-cart-area pb-100px pt-100px">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="cart-heading">
+                                                                <h2>Your Search</h2>
+                                                            </div>
+                                                            <div class="empty-text-contant text-center">
+                                                                <i class="fa fa-search"></i>
+                                                                <h3>No results found</h3>
+                                                                <a class="empty-cart-btn" href="{% url 'store' %}">
+                                                                    <i class="fa fa-arrow-left"> </i> Continue shopping
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="shop-list">
+                                {% if product %}
+                                         {% for stores in product %}
+                                        <div class="shop-list-wrapper">
+                                            <div class="row">
+                                                <div class="col-md-5 col-lg-5 col-xl-4">
+                                                    <div class="product">
+                                                        <div class="thumb">
+                                                            <a href="{{stores.get_url}}" class="image">
+                                                                <img src="{{ stores.images.url }}"
+                                                                    alt="Product" />
+                                                                 {% if stores.alt_images %}
+                                                            <img class="hover-image"
+                                                                src="{{ stores.alt_images.url }}" alt="Product" />
+                                                            {% endif %}
+                                                            </a>
+                                                            <span class="badges">
+                                                                <span class="new">New</span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-7 col-lg-7 col-xl-8">
+                                                    <div class="content-desc-wrap">
+                                                        <div class="content">
+                                                            <span class="ratings">
+                                                                 <div class="raising-star">
+                                    <!--                                     less than 0.5 show empty star else if greater than or equal to 0.5 print half star, if none print full stars-->
+                                                                    <i class="fa fa-star{% if stores.average_review < 0.5%}-o{%elif stores.average_review >= 0.5 and stores.average_review < 1 %}-half-o {% endif %}"></i>
+                                                                    <i class="fa fa-star{% if stores.average_review < 1.5%}-o{%elif stores.average_review >= 1.5 and stores.average_review < 2 %}-half-o {% endif %}"></i>
+                                                                    <i class="fa fa-star{% if stores.average_review < 2.5%}-o{%elif stores.average_review >= 2.5 and stores.average_review < 3 %}-half-o {% endif %}"></i>
+                                                                    <i class="fa fa-star{% if stores.average_review < 3.5%}-o{%elif stores.average_review >= 3.5 and stores.average_review < 4 %}-half-o {% endif %}"></i>
+                                                                    <i class="fa fa-star{% if stores.average_review < 4.5%}-o{%elif stores.average_review >= 4.5 and stores.average_review < 5 %}-half-o {% endif %}"></i>
+                                                                 </div>
+                                                            </span>
+                                                            <h5 class="title"><a href="{{stores.get_url}}">{{ stores.product_name }}
+                                                            </a></h5>
+                                                            <p>{{ stores.description }} </p>
+                                                        </div>
+                                                        <div class="box-inner">
+                                                            <span class="price">
+                                                                <span class="new">${{ stores.price }}</span>
+                                                            </span>
+                                                            <a href="{{ stores.get_url }}" title="Add To Cart" class=" add-to-cart">View Details</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                         {% endfor %}
+                                {% else %}
+                                        <div class="empty-cart-area pb-100px pt-100px">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="cart-heading">
+                                                            <h2>Your Search</h2>
+                                                        </div>
+                                                        <div class="empty-text-contant text-center">
+                                                            <i class="fa fa-search"></i>
+                                                            <h3>No results found</h3>
+                                                            <a class="empty-cart-btn" href="{% url 'store' %}">
+                                                                <i class="fa fa-arrow-left"> </i> Continue shopping
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Tab Content Area End -->
+
+                        <!--  Pagination Area Start -->
+                        <div class="pro-pagination-style text-center text-lg-end" data-aos="fade-up" data-aos-delay="200">
+                            <div class="pages">
+                                {% if product.has_other_pages %}
+                                <ul>
+                                    {% if product.has_previous %}
+                                    <li class="li"><a class="page-link" href="?page={{product.previous_page_number}}"><i class="fa fa-angle-left"></i></a></li>
+                                    {% else %}
+                                    <li class="li disabled"><a class="page-link" href="javascript:void()"><i class="fa fa-angle-left"></i></a></li>
+                                    {% endif %}
+                                    {% for i in product.paginator.page_range %}
+                                        {% if product.number == i %}
+                                            <li class="li"><a class="page-link active" href="#">{{ i }}</a></li>
+                                        {% else %}
+                                            <li class="li"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if product.has_next %}
+                                    <li class="li"><a class="page-link" href="?page={{product.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
+                                    {% else %}
+                                    <li class="li disabled"><a class="page-link" href="javascript:void()"><i class="fa fa-angle-right"></i></a></li>
+                                    {% endif %}
+                                </ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <!--  Pagination Area End -->
+                    </div>
+                    <!-- Shop Bottom Area End -->
+                </div>
+                <!-- Sidebar Area Start -->
+                <div class="col-lg-3 order-lg-first col-md-12 order-md-last">
+                    <div class="shop-sidebar-wrap">
+                        <!-- Sidebar single item -->
+                        <div class="sidebar-widget">
+                            <h4 class="sidebar-title">Categories</h4>
+                            <div class="sidebar-widget-category">
+                                <ul>
+                                    <li><a href="{% url 'store' %}" class="selected m-0"><i class="fa fa-angle-right"></i> Default</a></li>
+                                    {% for category in links%}
+                                    <li><a href="{{category.get_url}}" class=""><i class="fa fa-angle-right"></i> {{category.category_name}}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Shop Page End  -->
+{% endblock %}

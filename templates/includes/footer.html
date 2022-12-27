@@ -1,0 +1,146 @@
+{% load static %}
+
+
+    <!-- Footer Area Start -->
+    <div class="footer-area">
+        <div class="footer-container">
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="line-shape-top">
+                        <div class="row flex-md-row-reverse align-items-center">
+                            <div class="col-md-6 text-center text-md-end">
+                                <div class="payment-mth"><a href="#"><img class="img img-fluid"
+                                            src="{% static 'images/icons/payment.png' %}" alt="payment-image"></a></div>
+                            </div>
+                            <div class="col-md-6 text-center text-md-start">
+                                <p class="copy-text"> © 2021 <strong>E-commerce.</strong> Made With <i class="fa fa-heart"
+                                        aria-hidden="true"></i> By
+                                        <strong> Donald Nwokoro</strong>.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer Area End -->
+
+    <!-- Search Modal Start -->
+    <div class="modal popup-search-style" id="searchActive">
+        <button type="button" class="close-btn" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <div class="modal-overlay">
+            <div class="modal-dialog p-0" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <h2>Search Your Product</h2>
+                        <form action="{% url 'search' %}" method="GET" class="navbar-form position-relative" role="search">
+                            <div class="form-group">
+                                <input type="text" name="my-search" class="form-control" placeholder="Search here...">
+                            </div>
+                            <button type="submit" class="submit-btn"><i class="pe-7s-search"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Search Modal End -->
+
+
+
+
+
+
+    <!-- Global Vendor, plugins JS -->
+
+    <!-- Vendor JS -->
+    <script src="{% static 'js/vendor/jquery-3.5.1.min.js' %}"></script>
+
+    <script src="{% static 'js/vendor/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/vendor/jquery-migrate-3.3.0.min.js' %}"></script>
+    <script src="{% static 'js/vendor/modernizr-3.11.2.min.js' %}"></script>
+
+    <!--Plugins JS-->
+    <script src="{% static 'js/plugins/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'js/plugins/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'js/plugins/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'js/plugins/countdown.js' %}"></script>
+    <script src="{% static 'js/plugins/scrollup.js' %}"></script>
+    <script src="{% static 'js/plugins/jquery.zoom.min.js' %}"></script>
+    <script src="{% static 'js/plugins/venobox.min.js' %}"></script>
+    <script src="{% static 'js/plugins/ajax-mail.js' %}"></script>
+    <script>
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+    </script>
+<script>
+;(function($){
+	$('#selection').change(function(){
+		var getValue = $(this).val();
+		window.open(getValue, '_self');
+	})
+}(jQuery));
+</script>
+
+    <!-- Use the minified version files listed below for better performance and remove the files listed above -->
+    <!-- <script src="assets/js/vendor/vendor.min.js"></script>
+    <script src="assets/js/plugins/plugins.min.js"></script> -->
+
+    <!-- Main Js -->
+    <script src="{% static 'js/main.js' %}"></script>
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.all.min.js"></script>
+{% for message in messages %}
+<script>
+Swal.fire(
+  '{{ message }}',
+  '',
+  '{{ message.tags }}'
+)
+</script>
+ {% endfor %}
+
+
+
+{% for cart_item in cart_items %}
+<script>
+document.getElementById('{{forloop.counter}}').onclick = function(){
+    const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-success',
+    cancelButton: 'btn btn-danger'
+  },
+  buttonsStyling: false
+})
+
+swalWithBootstrapButtons.fire({
+  title: 'Are you sure you want to remove {{cart_item.product.product_name}}',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonText: '<a href="{% url 'delete_cart' cart_item.product.id cart_item.id %}">Yes, remove it!</a>',
+  cancelButtonText: 'No, cancel!',
+  reverseButtons: true
+}).then((result) => {
+  if (result.isConfirmed) {
+    swalWithBootstrapButtons.fire(
+      'Deleted!',
+      'Your {{cart_item.product.product_name}} has been removed from the cart.',
+      'success'
+    )
+  } else if (
+    result.dismiss === Swal.DismissReason.cancel
+  ) {
+    swalWithBootstrapButtons.fire(
+      'Cancelled',
+      'Your item is safe :)',
+      'error'
+    )
+  }
+})
+};
+</script>
+ {% endfor %}
+</body>
+
+</html>

@@ -1,0 +1,264 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+  <!-- Hero/Intro Slider Start -->
+  <div class="section ">
+    <div class="hero-slider swiper-container slider-nav-style-1 slider-dot-style-1">
+        <!-- Hero slider Active -->
+        <div class="swiper-wrapper">
+             {% for products in product %}
+            <!-- Single slider item -->
+            <div class="hero-slide-item slider-height swiper-slide d-flex"
+                data-bg-image="">
+                <div class="container align-self-center">
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 align-self-center sm-center-view">
+                            <div class="hero-slide-content slider-animated-1">
+                                <h2 class="title-1">{{products.product_name}}</h2>
+                                <p>{{products.description}}</p>
+                                <a href="{% url 'store' %}" class="btn btn-primary m-auto text-uppercase">View
+                                    Collection</a>
+                            </div>
+                        </div>
+                        <div
+                            class="col-xl-6 col-lg-6 col-md-6 col-sm-6 d-flex justify-content-center position-relative">
+                            <div class="show-case">
+                                <div class="hero-slide-image">
+                                    <img src="{{ products.images.url }}" alt="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             {% endfor %}
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination swiper-pagination-white"></div>
+        <!-- Add Arrows -->
+        <div class="swiper-buttons">
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Hero/Intro Slider End -->
+
+
+
+    <!-- Shop Page Start  -->
+    <div class="shop-category-area pt-100px pb-100px">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Shop Top Area Start -->
+                    <div class="desktop-tab">
+                        <div class="shop-top-bar d-flex">
+                            <!-- Left Side End -->
+                            <div class="shop-tab nav">
+                                <a class="active" href="#shop-grid" data-bs-toggle="tab">
+                                    <i class="fa fa-th" aria-hidden="true"></i>
+                                </a>
+                                <a href="#shop-list" data-bs-toggle="tab">
+                                    <i class="fa fa-list" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                             <!-- Right Side Start -->
+                            <div class="select-shoing-wrap d-flex align-items-center">
+                                <div class="shot-product">
+                                    <p>Categories:</p>
+                                </div>
+                                <div class="shop-select">
+                                    <select id="selection" class="shop-sort">
+                                        <option value="{% url 'store' %}" data-display="Default">Default</option>
+                                        {% for category in links %}
+                                        <option value="{{ category.get_url }}">{{ category.category_name }}</option>
+                                        {% endfor %}
+                                    </select>
+
+                                </div>
+                            </div>
+                            <!-- Right Side End -->
+
+                            <!-- Left Side start -->
+
+                        </div>
+                    </div>
+                    <!-- Shop Top Area End -->
+
+                    <!-- Mobile shop bar -->
+                    <div class="shop-top-bar mobile-tab">
+                        <!-- Left Side End -->
+                        <div class="shop-tab nav d-flex justify-content-between">
+                            <div class="shop-tab nav">
+                                <a class="active" href="#shop-grid" data-bs-toggle="tab">
+                                    <i class="fa fa-th" aria-hidden="true"></i>
+                                </a>
+                                <a href="#shop-list" data-bs-toggle="tab">
+                                    <i class="fa fa-list" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                            <!-- Right Side Start -->
+                            <div class="select-shoing-wrap d-flex align-items-center">
+                                <div class="shot-product">
+                                    <p>Sort By:</p>
+                                </div>
+                                <div class="shop-select">
+                                    <select class="shop-sort">
+                                        <option data-display="Default">Default</option>
+                                        <option value="1"> Name, A to Z</option>
+                                        <option value="2"> Name, Z to A</option>
+                                        <option value="3"> Price, low to high</option>
+                                        <option value="4"> Price, high to low</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Right Side End -->
+
+                    </div>
+                    <!-- Mobile shop bar -->
+
+                    <!-- Shop Bottom Area Start -->
+                    <div class="shop-bottom-area">
+
+                        <!-- Tab Content Area Start -->
+                        <div class="row">
+                            <div class="col">
+                                <div class="tab-content">
+                                    <div class="tab-pane fade show active" id="shop-grid">
+                                        <div class="row mb-n-30px">
+                                            {% for products in product %}
+                                            <div class="col-md-4 col-sm-6 col-xs-6 mb-30px" data-aos="fade-up"
+                                                data-aos-delay="200">
+                                                <!-- Single Prodect -->
+                                                <div class="product">
+                                                    <div class="thumb">
+                                                        <a href="{{products.get_url}}" class="image">
+                                                            <img src="{{ products.images.url }}"
+                                                                alt="Product" />
+                                                            {% if products.alt_images %}
+                                                            <img class="hover-image"
+                                                                src="{{ products.alt_images.url }}" alt="Product" />
+                                                            {% endif %}
+                                                        </a>
+                                                        <span class="badges">
+                                                            <span class="new">New</span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="content">
+                                                        <span class="ratings">
+                                                            <div class="raising-star">
+                                    <!--                                     less than 0.5 show empty star else if greater than or equal to 0.5 print half star, if none print full stars-->
+                                                                    <i class="fa fa-star{% if products.average_review < 0.5%}-o{%elif products.average_review >= 0.5 and products.average_review < 1 %}-half-o {% endif %}"></i>
+                                                                    <i class="fa fa-star{% if products.average_review < 1.5%}-o{%elif products.average_review >= 1.5 and products.average_review < 2 %}-half-o {% endif %}"></i>
+                                                                    <i class="fa fa-star{% if products.average_review < 2.5%}-o{%elif products.average_review >= 2.5 and products.average_review < 3 %}-half-o {% endif %}"></i>
+                                                                    <i class="fa fa-star{% if products.average_review < 3.5%}-o{%elif products.average_review >= 3.5 and products.average_review < 4 %}-half-o {% endif %}"></i>
+                                                                    <i class="fa fa-star{% if products.average_review < 4.5%}-o{%elif products.average_review >= 4.5 and products.average_review < 5 %}-half-o {% endif %}"></i>
+                                                                 </div>
+                                                        </span>
+                                                        <h5 class="title"><a href="{{products.get_url}}">{{ products.product_name }}
+                                                            </a>
+                                                        </h5>
+                                                        <span class="price">
+                                                            <span class="new">${{ products.price }}</span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="shop-list">
+                                        {% for products in product %}
+                                        <div class="shop-list-wrapper">
+                                            <div class="row">
+                                                <div class="col-md-5 col-lg-5 col-xl-4">
+                                                    <div class="product">
+                                                        <div class="thumb">
+                                                            <a href="{{products.get_url}}" class="image">
+                                                                <img src="{{ products.images.url }}"
+                                                                    alt="Product" />
+                                                                {% if products.alt_images %}
+                                                                <img class="hover-image"
+                                                                    src="{{ products.alt_images.url }}"
+                                                                    alt="Product" />
+                                                                {% endif %}
+                                                            </a>
+                                                            <span class="badges">
+                                                                <span class="new">New</span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-7 col-lg-7 col-xl-8">
+                                                    <div class="content-desc-wrap">
+                                                        <div class="content">
+                                                            <span class="ratings">
+                                                                 <div class="raising-star">
+                                    <!--                                     less than 0.5 show empty star else if greater than or equal to 0.5 print half star, if none print full stars-->
+                                                                    <i class="fa fa-star{% if products.average_review < 0.5%}-o{%elif products.average_review >= 0.5 and products.average_review < 1 %}-half-o {% endif %}"></i>
+                                                                    <i class="fa fa-star{% if products.average_review < 1.5%}-o{%elif products.average_review >= 1.5 and products.average_review < 2 %}-half-o {% endif %}"></i>
+                                                                    <i class="fa fa-star{% if products.average_review < 2.5%}-o{%elif products.average_review >= 2.5 and products.average_review < 3 %}-half-o {% endif %}"></i>
+                                                                    <i class="fa fa-star{% if products.average_review < 3.5%}-o{%elif products.average_review >= 3.5 and products.average_review < 4 %}-half-o {% endif %}"></i>
+                                                                    <i class="fa fa-star{% if products.average_review < 4.5%}-o{%elif products.average_review >= 4.5 and products.average_review < 5 %}-half-o {% endif %}"></i>
+                                                                 </div>
+                                                            </span>
+                                                            <h5 class="title"><a href="{{products.get_url}}">{{ products.product_name }}
+                                                            </a></h5>
+                                                            <p>{{ products.description }} </p>
+                                                        </div>
+                                                        <div class="box-inner">
+                                                            <span class="price">
+                                                                <span class="new">${{ products.price }}</span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Tab Content Area End -->
+
+                        <!--  Pagination Area Start -->
+                        <div class="pro-pagination-style text-center text-lg-end" data-aos="fade-up" data-aos-delay="200">
+                            <div class="pages">
+                                {% if product.has_other_pages %}
+                                <ul>
+                                    {% if product.has_previous %}
+                                    <li class="li"><a class="page-link" href="?page={{product.previous_page_number}}"><i class="fa fa-angle-left"></i></a></li>
+                                    {% else %}
+                                    <li class="li disabled"><a class="page-link" href="javascript:void()"><i class="fa fa-angle-left"></i></a></li>
+                                    {% endif %}
+                                    {% for i in product.paginator.page_range %}
+                                        {% if product.number == i %}
+                                            <li class="li"><a class="page-link active" href="#">{{ i }}</a></li>
+                                        {% else %}
+                                            <li class="li"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if product.has_next %}
+                                    <li class="li"><a class="page-link" href="?page={{product.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
+                                    {% else %}
+                                    <li class="li disabled"><a class="page-link" href="javascript:void()"><i class="fa fa-angle-right"></i></a></li>
+                                    {% endif %}
+                                </ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <!--  Pagination Area End -->
+                    </div>
+                    <!-- Shop Bottom Area End -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Shop Page End  -->
+
+{% endblock %}

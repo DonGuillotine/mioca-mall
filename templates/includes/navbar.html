@@ -1,0 +1,135 @@
+{% load static %}
+    <!-- Header Area Start -->
+    <header>
+        <div style="z-index: 999" class="header-main bg-white sticky-nav ">
+            <div class="container position-relative">
+                <div class="row">
+
+                    <div class="col align-self-center d-none d-lg-block">
+                        <div class="header-logo">
+                            <a href="/"><img src="{% static 'images/logo/logo.png' %}" alt="Site Logo" /></a>
+                        </div>
+                    </div>
+                    <!-- Header Action Start -->
+                    <div class="col col-lg-auto align-self-center pl-0">
+                        <div class="header-actions">
+                            <!-- Single Wedge Start -->
+                             <a href="/store" class="header-action-btn" data-toggle="tooltip" data-placement="bottom" title="Store">
+                                <i class="pe-7s-shopbag"></i>
+                            </a>
+                            <!-- Single Wedge End -->
+                            <!-- Single Wedge Start -->
+                            <a href="#" class="header-action-btn" data-bs-toggle="modal" data-bs-target="#searchActive" data-toggle="tooltip" data-placement="bottom" title="Search">
+                                <i class="pe-7s-search"></i>
+                            </a>
+                            <!-- Single Wedge End -->
+                            {% if user.id is None %}
+                            <div style="display:none" class="header-bottom-set dropdown">
+                                <button class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown"><i
+                                        class="pe-7s-users"></i></button>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a class="dropdown-item" href="">My account</a></li>
+                                    <li><a class="dropdown-item" href="checkout.html">Checkout</a></li>
+                                </ul>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a class="dropdown-item" href="my-account.html">My account</a></li>
+                                    <li><a class="dropdown-item" href="checkout.html">Checkout</a></li>
+                                </ul>
+                            </div>
+                            {% else %}
+                             <div class="header-bottom-set dropdown">
+                                <button class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown"><i
+                                        class="pe-7s-users"></i></button>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a class="dropdown-item" href="{%url 'dashboard'%}">My account</a></li>
+                                </ul>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a class="dropdown-item" href="my-account.html">My account</a></li>
+                                </ul>
+                            </div>
+                            {% endif %}
+                            <a href="{% url 'cart' %}"
+                                class="header-action-btn header-action-btn-cart pr-0" data-toggle="tooltip" data-placement="bottom" title="Cart">
+                                <i class="pe-7s-cart"></i>
+                                <span class="header-action-num">{{cart_count}}</span>
+                                <!-- <span class="cart-amount">€30.00</span> -->
+                            </a>
+                        </div>
+                        <!-- Header Action End -->
+                    </div>
+            <div class="col col-lg-auto align-self-center pl-0">
+				<div class="d-flex justify-content-end mb-3 mb-lg-0">
+                    {% if user.id is None %}
+					<div class="widget-header">
+						<small class="title text-muted">Welcome guest!</small>
+						<div>
+							<a href="{% url 'login' %}">Sign in</a> <span class="dark-transp"> | </span>
+							<a href="{% url 'register' %}"> Register</a>
+						</div>
+					</div>
+                    {% else %}
+                    <div class="widget-header">
+						<small class="title text-muted">Welcome {{user.first_name | capfirst}}</small>
+						<div>
+							<a href="{% url 'dashboard' %}">Dashboard</a> <span class="dark-transp"> | </span>
+							<a href="{% url 'logout' %}"> Logout</a>
+						</div>
+					</div>
+                    {% endif %}
+				</div> <!-- widgets-wrap.// -->
+			</div>
+
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Header Area End -->
+
+    <div class="offcanvas-overlay"></div>
+
+    <!-- OffCanvas Wishlist Start -->
+    <div id="offcanvas-wishlist" class="offcanvas offcanvas-wishlist">
+        <div class="inner">
+            <div class="head">
+                <span class="title">Wishlist</span>
+                <button class="offcanvas-close">×</button>
+            </div>
+            <div class="body customScroll">
+                <ul class="minicart-product-list">
+                    <li>
+                        <a href="single-product.html" class="image"><img src="{% static 'images/product-image/1.jpg' %}"
+                                alt="Cart product Image"></a>
+                        <div class="content">
+                            <a href="single-product.html" class="title">Hand-Made Garlic Mortar</a>
+                            <span class="quantity-price">1 x <span class="amount">$21.86</span></span>
+                            <a href="#" class="remove">×</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="single-product.html" class="image"><img src="{% static 'images/product-image/2.jpg' %}"
+                                alt="Cart product Image"></a>
+                        <div class="content">
+                            <a href="single-product.html" class="title">Handmade Ceramic Pottery</a>
+                            <span class="quantity-price">1 x <span class="amount">$13.28</span></span>
+                            <a href="#" class="remove">×</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="single-product.html" class="image"><img src="{% static 'images/product-image/3.jpg' %}"
+                                alt="Cart product Image"></a>
+                        <div class="content">
+                            <a href="single-product.html" class="title">Hand Painted Bowls</a>
+                            <span class="quantity-price">1 x <span class="amount">$17.34</span></span>
+                            <a href="#" class="remove">×</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="foot">
+                <div class="buttons">
+                    <a href="wishlist.html" class="btn btn-dark btn-hover-primary mt-30px">view wishlist</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- OffCanvas Wishlist End -->

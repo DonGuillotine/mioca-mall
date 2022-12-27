@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<style>
+.mon{
+    color: #474747;
+    font-size: 16px;
+    font-weight: 500;
+}
+</style>
+   <!-- breadcrumb-area start -->
+    <div class="breadcrumb-area">
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-12 text-center">
+                    <h2 class="breadcrumb-title">Check Out</h2>
+                    <!-- breadcrumb-list start -->
+                    <ul class="breadcrumb-list">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item active">Check Out</li>
+                    </ul>
+                    <!-- breadcrumb-list end -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb-area end -->
+
+ <!-- Cart Area Start -->
+   <!-- checkout area start -->
+    <div class="cart-main-area pt-100px pb-100px">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="billing-info-wrap">
+                        <h3>Billing Details</h3>
+                         <form action="{% url 'place_order' %}" method="POST">
+                             {% csrf_token %}
+                        <div class="row">
+
+                            <div class="col-lg-6 col-md-6">
+                                <div class="billing-info mb-4">
+                                    <label>First Name</label>
+                                    <input type="text" name="first_name" required />
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="billing-info mb-4">
+                                    <label>Last Name</label>
+                                    <input type="text" name="last_name" required />
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="billing-info mb-4">
+                                    <label>Email</label>
+                                    <input type="email" name="email" required />
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="billing-info mb-4">
+                                    <label>Phone Number</label>
+                                    <input type="text" name="phone" required />
+                                </div>
+                            </div>
+                           <div class="col-lg-12">
+                                <div class="billing-info mb-4">
+                                    <label>Address Line 1</label>
+                                    <input type="text" name="address_line_1" required />
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="billing-info mb-4">
+                                    <label>Address Line 2</label>
+                                    <input type="text" name="address_line_2" />
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="billing-info mb-4">
+                                    <label>Town / City</label>
+                                    <input type="text" name="city" required/>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="billing-info mb-4">
+                                    <label>State</label>
+                                    <input type="text" name="state" required />
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="billing-info mb-4">
+                                    <label>Country</label>
+                                    <input type="text" name="country" required />
+                                </div>
+                            </div>
+                           <div class="additional-info-wrap">
+                            <h4>Additional information</h4>
+                            <div class="additional-info">
+                                <label>Order notes</label>
+                                <textarea placeholder="Notes about your order, e.g. special notes for delivery. "
+                                    name="order_note"></textarea>
+                            </div>
+                        </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                    <div class="col-lg-5 mt-md-30px mt-lm-30px ">
+                     <div class="table-content table-responsive cart-table-content">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Price</th>
+                                        <th>Qty</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for cart_item in cart_items %}
+                                    <tr>
+                                        <td class="product-thumbnail">
+                                             <div>
+                                            <a href="#"><img class="img-responsive ml-15px"
+                                                    src="{{ cart_item.product.images.url }}" alt="" /></a>
+                                             <a class="mon" href="{{cart_item.product.get_url}}">{{cart_item.product.product_name}}</a>
+                                            <p class="text-muted small">
+                                                {% if cart_item.variations.all %}
+                                                    {% for item in cart_item.variations.all %}
+                                                        {{ item.variation_category | capfirst }} : {{item.variation_value | capfirst }} <br>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </p>
+                                            </div>
+                                        </td>
+
+                                        <td class="product-price-cart">
+                                            <span class="amount">${{cart_item.sub_total}}</span>
+                                            <p class="text-muted small">${{cart_item.product.price}} each</p>
+                                        </td>
+                                        <td>
+                                             {{cart_item.quantity}}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div style="margin-top: 25px; display:flex" class="Place-order">
+                            <button type="submit" class="btn btn-primary">Place Order</button>
+                            <a class="btn btn-primary" style="margin-left: 55px;" href="{% url 'store' %}">Continue Shopping</a>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- checkout area end -->
+
+
+
+{% endblock %}
