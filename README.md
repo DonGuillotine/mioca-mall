@@ -1,5 +1,5 @@
 # Mioca Mall E-commerce Store
-I created a user-friendly ecommerce platform using Django, that efficiently manages orders, inventory, and other business tasks. The combination of the framework and my development has resulted in a reliable and scalable platform for users.
+I created a user-friendly ecommerce platform using Django, that efficiently manages orders, inventory, and other business tasks. The combination of the framework and my development skills has resulted in a reliable and scalable platform for users.
 
 <h2> A clean and user-friendly interface for browsing and purchasing products.</h2>
 <img src="https://i.imgur.com/3NWuVUS.gif">
