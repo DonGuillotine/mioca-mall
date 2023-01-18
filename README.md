@@ -19,4 +19,4 @@ I am proud to present the ecommerce website that I have built using the Django w
 <h2> Introducing the user's dashboard, with features including an order history, the ability to edit profile and change password, check purchase history, manage account and track your orders all in one place.</h2>
 <img src="https://i.imgur.com/NnOw0KZ.gif">
 
-# This Project is Open Source ❣️, I would love more Contributors!
+# This Project is Open Source, I would love more Contributors!
