@@ -1,5 +1,5 @@
 # Mioca Mall E-commerce Store
-I am proud to present the ecommerce website that I have built using the Django web framework. As a developer, I found Django to be a powerful and flexible tool that allowed me to quickly develop and deploy new features for the site. The user-friendly interface and seamless checkout experience were a top priority for me, and I believe that I have succeeded in creating a website that is easy for customers to use. Additionally, the backend system that I have set up allows me to manage orders, track inventory, and handle other important business tasks efficiently. Overall, I am confident that the Django framework has allowed me to create a reliable and scalable ecommerce platform that will serve users well.
+I created a user-friendly ecommerce platform using Django, that efficiently manages orders, inventory, and other business tasks. The combination of the framework and my development has resulted in a reliable and scalable platform for users.
 
 <h2> A clean and user-friendly interface for browsing and purchasing products.</h2>
 <img src="https://i.imgur.com/3NWuVUS.gif">
